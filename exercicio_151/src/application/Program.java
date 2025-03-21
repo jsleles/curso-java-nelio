@@ -7,7 +7,7 @@ import entities.Account;
 import exceptions.DomainException;
 
 public class Program {
-
+    //teste git
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
