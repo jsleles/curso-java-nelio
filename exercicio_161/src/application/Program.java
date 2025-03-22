@@ -27,20 +27,15 @@ public class Program {
         
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line = br.readLine();
-			String[] colunas = line.split(",");
-
 			while (line != null) {
-
+				String[] colunas = line.split(",");
 				Produto produto  = new Produto();			
                 produto.setNome(colunas[0]);	
                 produto.setPrecoUnitario(Double.parseDouble( colunas[1]));
                 produto.setQuantidade (Integer.parseInt(colunas[2]));
                 produtos.add(produto);
-                
-				line = br.readLine();
-                if (line != null) {
-				   colunas = line.split(",");
-                }   
+
+                line = br.readLine();
 			}
 		}
 		catch (IOException e) {
@@ -60,12 +55,6 @@ public class Program {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
 	}
 
 }
