@@ -18,43 +18,43 @@ public class Program {
 
 		Locale.setDefault(Locale.US);
 		
-		String path    = "/home/jsleles/temp/vendas.csv";
+		String path  = "/home/jsleles/temp/vendas.csv";
 		String pathOut = "/home/jsleles/temp/out";
 		boolean success = new File(pathOut).mkdir();
-		System.out.println("diretório criado com sucesso :" + success);
 		List<Produto> produtos = new ArrayList<>();
 		
-        
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line = br.readLine();
 			while (line != null) {
 				String[] colunas = line.split(",");
-				Produto produto  = new Produto();			
-                produto.setNome(colunas[0]);	
-                produto.setPrecoUnitario(Double.parseDouble( colunas[1]));
-                produto.setQuantidade (Integer.parseInt(colunas[2]));
-                produtos.add(produto);
+				
+				String nome = colunas[0];
+				Double precoUnitario = Double.parseDouble( colunas[1]);
+				Integer quantidade = Integer.parseInt(colunas[2]);
 
-                line = br.readLine();
+				produtos.add(new Produto(nome, precoUnitario, quantidade));
+                
+				line = br.readLine();
+			}
+			String arquivoSaida = pathOut + "/summary.csv";
+			
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoSaida))) {
+				for (Produto produto: produtos  ) {
+					String lineOut = produto.getNome() + " , " + String.format("%.2f", produto.precoTotal() );
+					bw.write(lineOut);
+					bw.newLine();
+				}
+
+				System.out.println("Arquivo " + arquivoSaida + " criado com sucesso.");
+				
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		catch (IOException e) {
 			System.out.println("Error : " + e.getMessage());
 		}
 		
-		String arquivoSaida = pathOut + "/summary.csv";
-		
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoSaida))) {
-			for (Produto produto: produtos  ) {
-                String line = produto.getNome() + " , " +
-			                  String.format("%.2f", produto.precoTotal() );
-                bw.write(line);
-                bw.newLine();
-	        }
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 }
