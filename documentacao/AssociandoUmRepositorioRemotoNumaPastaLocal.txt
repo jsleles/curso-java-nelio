@@ -1,0 +1,4 @@
+> git init 
+> git branch -M main
+> git remote add origin <repositorioDoGitHub>
+> git pull origin main
